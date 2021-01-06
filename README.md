@@ -1,7 +1,7 @@
 # Access your Multi-Attach EBS volumes across multiple hosts using GFS2
 ***
 One of the design patterns for high availability of mission critical applications is the use of shared storage. This architectural pattern allows the storage volumes to be accessed on multiple hosts at the same time, making the application resilient to node failures. [Amazon Elastic Block Store(EBS)](https://aws.amazon.com/ebs/) volumes can be attached to multiple [Amazon Elastic Compute Cloud (EC2)](https://aws.amazon.com/ec2/) instances using the [Amazon EBS Multi-Attach](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes-multi.html) feature. This feature can be used for high availability by using a cluster-aware file system such as GFS2 that safely coordinates storage access between instances to prevent data inconsistencies.   
-This blog post walks you through the process of setting up GFS2 using Multi-Attach enabled EBS volumes attached to two EC2 instances which are a part of a Linux cluster.
+This post walks you through the process of setting up GFS2 using Multi-Attach enabled EBS volumes attached to two EC2 instances which are a part of a Linux cluster.
 
 ###  High Level Steps:
 1. Setting up EC2 instances and Multi-Attach enabled EBS volumes.
