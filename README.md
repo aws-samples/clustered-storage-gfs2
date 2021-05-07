@@ -59,6 +59,11 @@ You will be using pcs to configure your cluster.  To start and enable the pcsd d
 sudo systemctl start pcsd.service
 sudo systemctl enable pcsd.service
 ```
+To have pacemaker and corosync start on reboot, run the following on both nodes:
+```bash
+sudo systemctl enable corosync
+sudo systemctl enable pacemaker
+```
 
 The cluster software creates a user hacluster which will be used to configure the cluster. The hacluster user will be used by the cluster to perform cluster tasks like syncing the configuration and starting and stopping services on cluster nodes. To get started, the password for hacluster needs to be set on both the nodes and has to be same. To set the password for the hacluster user run the following commands on both the nodes:
 ```bash
