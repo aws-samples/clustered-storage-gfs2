@@ -111,7 +111,7 @@ Setting up fencing: The next step is to set up a fencing device for the cluster.
 Install the fence agent on the nodes on both the nodes:
 
 ```bash
-sudo yum install fence-agents-aws.x86_64 -y
+sudo yum install fence-agents-aws.x86_64 python2-boto3 -y
 ```
 
 Once the agent is successfully installed, it should be visible in the output of the following command:
