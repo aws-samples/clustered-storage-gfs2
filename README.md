@@ -111,7 +111,7 @@ Setting up fencing: The next step is to set up a fencing device for the cluster.
 Install the fence agent on the nodes on both the nodes:
 
 ```bash
-sudo yum install fence-agents-aws.x86_64 -y
+sudo yum install fence-agents-aws.x86_64 python2-boto3 -y
 ```
 
 Once the agent is successfully installed, it should be visible in the output of the following command:
@@ -128,11 +128,11 @@ The fence_aws agent needs the credentials of an IAM user with privileges to desc
 To configure the fencing agent, use the “pcs stonith create” command on one of the hosts:
 ```bash
 sudo pcs stonith create clusterfence fence_aws \
-access_key="your access key" \
-secret_key="your secret key" \
-region=us-west-2 \
-pcmk_host_map="ma-host-1:Instance-ID-1;ma-host2:Instance-ID-2" \
-power_timeout=240 pcmk_reboot_timeout=480 pcmk_reboot_retries=4 
+  access_key="your access key" \
+  secret_key="your secret key" \
+  region=us-west-2 \
+  pcmk_host_map="ma-host-1:Instance-ID-1;ma-host2:Instance-ID-2" \
+  power_timeout=240 pcmk_reboot_timeout=480 pcmk_reboot_retries=4 
 ```
 
 
@@ -177,8 +177,7 @@ sudo /sbin/lvmconf --enable-cluster
 Clvmd is the clustered LVM daemon which is responsible for distributing LVM metadata updates across the cluster. The following command needs to be executed on any node to create clvmd as a cluster resource:
 
 ```bash
-sudo pcs resource create clvmd ocf:heartbeat:clvm op monitor interval=30s 
-on-fail=fence clone interleave=true ordered=true
+sudo pcs resource create clvmd ocf:heartbeat:clvm op monitor interval=30s on-fail=fence clone interleave=true ordered=true
 ```
 
 Also, clvmd needs to start after dlm and the clvmd resource needs to be on the same node as the dlm resource. The following set of commands(run on any node) defines the constraints:
@@ -213,9 +212,7 @@ Some points to note before you proceed to mount the GFS2 filesystem:
 Create a filesystem resource by running the following command on any node:
 
 ```bash
-sudo pcs resource create clusterfs Filesystem device="/dev/clustervg/clusterlv" 
-directory="/sharedFS" fstype="gfs2" options="noatime" op monitor interval=10s 
-on-fail=fence clone interleave=true
+sudo pcs resource create clusterfs Filesystem device="/dev/clustervg/clusterlv" directory="/sharedFS" fstype="gfs2" options="noatime" op monitor interval=10s on-fail=fence clone interleave=true
 ```
 
 Finally, for setting up the GFS2 and clvmd dependency and startup order use the following commands:
